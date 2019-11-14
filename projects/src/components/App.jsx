@@ -18,5 +18,9 @@ export default App;
 
 
 App.propTypes = {
-  name: PropTypes.string
+  name: PropTypes.string,
+};
+
+App.defaultProps = {
+  name: 'john',
 };
