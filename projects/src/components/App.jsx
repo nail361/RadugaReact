@@ -21,5 +21,5 @@ App.propTypes = {
 };
 
 App.defaultProps = {
-  name: 'john'
+  name: 'john',
 };

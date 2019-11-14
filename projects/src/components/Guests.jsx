@@ -54,7 +54,7 @@ class Guests extends React.Component {
           />
         </label>
       </form>
-    )
+    );
   }
 }
 
