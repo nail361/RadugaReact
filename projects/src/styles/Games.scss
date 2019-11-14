@@ -1,0 +1,32 @@
+.game1-wrapper{
+  width: 50%;
+  height: 100%;
+  text-align: center;
+  margin: auto;
+
+  .planet{
+    float: left;
+    width: 400px;
+    height: 400px;
+    background-color: rgb(73, 152, 255);
+    border: 5px solid rgb(143, 169, 255);
+    border-radius: 50%;
+  }
+
+  .icons{
+    float: right;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 100%;
+
+    .icon{
+      width: 100px;
+      height: 100px;
+      margin: 5px;
+      background-color: white;
+      border: 5px solid grey;
+      border-radius: 50%;
+    }
+  }
+}
