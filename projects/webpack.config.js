@@ -1,18 +1,22 @@
 const path = require('path');
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/main.jsx',
-  
+
   devServer: {
-	host: 'localhost',
-	port: 3000,
-	contentBase: './build'
+    host: 'localhost',
+    port: 3000,
+    contentBase: './build',
   },
-  
+
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
+
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, 'build')
+    path: path.resolve(__dirname, 'build'),
   },
   module: {
     rules: [
@@ -20,28 +24,28 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: [
-          "babel-loader"
-        ]
+          'babel-loader',
+        ],
       },
-	  {
+      {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        use: ['style-loader', 'css-loader'],
       },
-	  {
+      {
         test: /\.html$/,
         use: [
           {
-            loader: "html-loader"
-          }
-        ]
-      }
-    ]
+            loader: 'html-loader',
+          },
+        ],
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/index.html",
-	  filename: "./index.html"
-    })
-  ]
+      template: './src/index.html',
+      filename: './index.html',
+    }),
+  ],
 
 };
