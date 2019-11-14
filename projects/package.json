@@ -17,6 +17,9 @@
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
     "eslint": "^6.6.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.16.0",
     "eslint-watch": "^6.0.1",
     "html-loader": "^0.5.5",
@@ -28,8 +31,8 @@
   "scripts": {
     "build": "webpack --mode production",
     "start": "webpack-dev-server --mode development --hot",
-    "lint": "eslint ./index.js ./containers/*.js ./components/**/*.js",
-    "lint:fix": "eslint --fix ./index.js ./containers/*.js ./components/**/*.js"
+    "lint": "eslint ./src/main.jsx ./src/containers/*.jsx ./src/components/**/*.jsx",
+    "lint:fix": "eslint --fix ./src/main.jsx ./src/containers/*.jsx ./src/components/**/*.jsx"
   },
   "keywords": [],
   "author": "",
