@@ -1,59 +1,71 @@
-import React from "react";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-class Guests extends React.Component{
-    constructor(props){
-        super(props);
+class Guests extends React.Component {
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            isGoing: true
-        }
+    this.state = {
+      isGoing: true,
+    };
 
-        this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  handleInputChange(event) {
+    const { target, name } = event;
+    const { onGuestsChange } = this.props;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+
+    if (name === 'isGoing') {
+      this.setState(
+        {
+          [name]: value,
+        },
+      );
+    } else if (name === 'guestsNumber') {
+      onGuestsChange(value);
     }
+  }
 
-    handleInputChange(event){
-        let target = event.target;
-        let value = target.type === 'checkbox' ? target.checked : target.value;
-        let name = target.name;
+  render() {
+    const { guestsNumber } = this.props;
+    const { isGoing } = this.state;
 
-        if (name == "isGoing"){
-            this.setState(
-                {
-                    [name]: value
-                }
-            );
-        }
-        else if (name == "guestsNumber"){
-            this.props.onGuestsChange(value);
-        }
-    }
-
-    render(){
-
-        const guestsNumber = this.props.guestsNumber;
-
-        return(
-            <form>
-                <label>
-                    Пойду:
-                    <input
-                        name="isGoing"
-                        type="checkbox"
-                        checked={this.state.isGoing}
-                        onChange={this.handleInputChange} />
-                </label>
-                <br />
-                <label>
-                    Количество гостей:
-                    <input
-                        name="guestsNumber"
-                        type="number"
-                        value={guestsNumber}
-                        onChange={this.handleInputChange} />
-                </label>
-            </form>
-        )
-    }
+    return (
+      <form>
+        <label htmlFor="isGoing">
+          Пойду:
+          <input
+            name="isGoing"
+            type="checkbox"
+            checked={isGoing}
+            onChange={this.handleInputChange}
+          />
+        </label>
+        <br />
+        <label htmlFor="guestsNumber">
+          Количество гостей:
+          <input
+            name="guestsNumber"
+            type="number"
+            value={guestsNumber}
+            onChange={this.handleInputChange}
+          />
+        </label>
+      </form>
+    )
+  }
 }
 
 export default Guests;
+
+Guests.propTypes = {
+  onGuestsChange: PropTypes.func,
+  guestsNumber: PropTypes.number,
+};
+
+Guests.defaultProps = {
+  onGuestsChange: () => null,
+  guestsNumber: 0,
+};

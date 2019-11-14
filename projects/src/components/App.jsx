@@ -16,11 +16,10 @@ class App extends PureComponent {
 
 export default App;
 
-
 App.propTypes = {
   name: PropTypes.string,
 };
 
 App.defaultProps = {
-  name: 'john',
+  name: 'john'
 };
