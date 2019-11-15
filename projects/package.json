@@ -6,6 +6,7 @@
   "dependencies": {
     "prop-types": "^15.7.2",
     "react": "^16.11.0",
+    "react-beautiful-dnd": "^12.1.1",
     "react-dom": "^16.11.0",
     "webpack": "^4.41.2"
   },
