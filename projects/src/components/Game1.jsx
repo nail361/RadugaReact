@@ -3,6 +3,24 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import '../styles/Games.scss';
 
+const getDropStyle = (style, snapshot) => {
+  if (!snapshot.isDropAnimating) {
+    return style;
+  }
+  const { moveTo, curve, duration } = snapshot.dropAnimation;
+
+  // move to the right spot
+  // const translate = `translate(${moveTo.x}px, ${moveTo.y}px)`;
+  const translate = 'translate(50%, 50%)';
+
+  // patching the existing style
+  return {
+    ...style,
+    transform: `${translate}`,
+    transition: `all ${curve} ${duration}s`,
+  };
+};
+
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
@@ -70,19 +88,32 @@ class Game1 extends PureComponent {
 
   static getIcons(icons, place) {
     const isDragDisabled = place === 'planet';
-    const iconsDiv = icons.map((icon, index) =>
-      (
+
+    let iconsDiv;
+
+    if (place === 'planet') {
+      iconsDiv = icons.map((icon) => (
+        <div
+          key={icon}
+          className={['icon', icon].join(' ')}
+        >
+          {icon}
+        </div>
+      ));
+    } else {
+      iconsDiv = icons.map((icon, index) => (
         <Draggable
           key={icon}
           draggableId={icon + place}
           index={index}
           isDragDisabled={isDragDisabled}
         >
-          {(provided) => (
+          {(provided, snapshot) => (
             <div
               {...provided.draggableProps}
               {...provided.dragHandleProps}
               ref={provided.innerRef}
+              style={getDropStyle(provided.draggableProps.style, snapshot)}
               className={['icon', icon].join(' ')}
             >
               {icon}
@@ -90,6 +121,7 @@ class Game1 extends PureComponent {
           )}
         </Draggable>
       ));
+    }
 
     return iconsDiv;
   }
