@@ -10,8 +10,7 @@ const getDropStyle = (style, snapshot) => {
   const { moveTo, curve, duration } = snapshot.dropAnimation;
 
   // move to the right spot
-  // const translate = `translate(${moveTo.x}px, ${moveTo.y}px)`;
-  const translate = 'translate(50%, 50%)';
+  const translate = `translate(${moveTo.x + 150}px, ${moveTo.y + 150}px)`;
 
   // patching the existing style
   return {

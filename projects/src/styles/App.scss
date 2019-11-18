@@ -7,3 +7,18 @@ h1 {
     display: flex;
     height: 550px;
 }
+
+.footer{
+    display: flex;
+    justify-content: center;
+
+    .answer-btn{
+        font-size: 24px;
+        font-weight: 600;
+        color:white;
+        text-shadow: 1px 1px 2px black, 0 0 1em grey;
+        background-color: rgb(99, 212, 99);
+        height: 50px;
+        width: 150px;
+    }
+}

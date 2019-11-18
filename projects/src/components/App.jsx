@@ -11,6 +11,10 @@ class App extends PureComponent {
     this.state = { gameId: 1 };
   }
 
+  onAnswerClick() {
+    const isCorrect = this.checkAnswer();
+  }
+
   nextGame() {
     const { gameId } = this.state;
     this.setState({ gameId: gameId + 1 });
@@ -31,6 +35,15 @@ class App extends PureComponent {
         <div className="games-wrapper">
           <Game nextGame={this.nextGame} />
         </div>
+        <footer className="footer">
+          <button
+            className="answer-btn"
+            type="button"
+            onClick={this.onAnswerClick}
+          >
+            Ответить
+          </button>
+        </footer>
       </div>
     );
   }
