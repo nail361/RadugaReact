@@ -7,7 +7,14 @@ const getDropStyle = (style, snapshot) => {
   if (!snapshot.isDropAnimating) {
     return style;
   }
-  const { moveTo, curve, duration } = snapshot.dropAnimation;
+
+  const { draggingOver, dropAnimation } = snapshot;
+
+  if (draggingOver === 'droppable') {
+    return style;
+  }
+
+  const { moveTo, curve, duration } = dropAnimation;
 
   // move to the right spot
   const translate = `translate(${moveTo.x + 150}px, ${moveTo.y + 150}px)`;
@@ -29,32 +36,34 @@ const reorder = (list, startIndex, endIndex) => {
 };
 
 const switchDroppable = (index, oldDrop, newDrop) => {
-  newDrop.push(oldDrop.splice(index, 1));
+  newDrop.push(oldDrop.splice(index, 1)[0]);
 
   return { newIcons: oldDrop, newPlanetIcons: newDrop };
 };
 
-const trueAnswers = ['bird', 'animal', 'people', 'fish'];
+const trueAnswers = ['bird', 'animal', 'human', 'fish'];
 
 class Game1 extends PureComponent {
   constructor(props) {
     super(props);
 
-    let icons = ['bird', 'animal', 'people', 'fish', 'dino', 'nfo'];
+    let icons = ['bird', 'animal', 'human', 'fish', 'dino', 'ufo'];
     icons = icons.sort(() => Math.random() - 0.5);
 
     this.state = {
       icons,
       planetIcons: [],
+      iconsClasses: [],
     };
 
     this.onDragEnd = this.onDragEnd.bind(this);
+    this.checkAnswer = this.checkAnswer.bind(this);
+    this.getIcons = this.getIcons.bind(this);
+    this.getResultClass = this.getResultClass.bind(this);
+    this.replay = this.replay.bind(this);
   }
 
   onDragEnd(result) {
-    // dropped outside the list
-    console.log(result);
-
     if (result.destination) {
       if (result.destination.droppableId === 'planet') {
         const { icons, planetIcons } = this.state;
@@ -85,19 +94,17 @@ class Game1 extends PureComponent {
     }
   }
 
-  static getIcons(icons, place) {
+  getIcons(icons, place) {
     const isDragDisabled = place === 'planet';
 
     let iconsDiv;
 
     if (place === 'planet') {
-      iconsDiv = icons.map((icon) => (
+      iconsDiv = icons.map((icon, index) => (
         <div
           key={icon}
-          className={['icon', icon].join(' ')}
-        >
-          {icon}
-        </div>
+          className={['icon', icon, this.getResultClass(index)].join(' ')}
+        />
       ));
     } else {
       iconsDiv = icons.map((icon, index) => (
@@ -114,9 +121,7 @@ class Game1 extends PureComponent {
               ref={provided.innerRef}
               style={getDropStyle(provided.draggableProps.style, snapshot)}
               className={['icon', icon].join(' ')}
-            >
-              {icon}
-            </div>
+            />
           )}
         </Draggable>
       ));
@@ -125,39 +130,86 @@ class Game1 extends PureComponent {
     return iconsDiv;
   }
 
+  getResultClass(index) {
+    const { iconsClasses } = this.state;
+
+    if (index < iconsClasses.length) return iconsClasses[index];
+    return '';
+  }
+
+  checkAnswer() {
+    let correct = true;
+    const { planetIcons } = this.state;
+
+    let trueCount = trueAnswers.length;
+    const classes = [];
+
+    planetIcons.forEach((icon) => {
+      if (trueAnswers.indexOf(icon) >= 0) {
+        trueCount--;
+        classes.push('correct');
+      } else {
+        trueCount++;
+        classes.push('wrong');
+      }
+    });
+
+    this.setState({
+      iconsClasses: classes,
+    });
+
+    if (trueCount > 0) correct = false;
+
+    return correct;
+  }
+
+  replay() {
+    const { icons, planetIcons } = this.state;
+    const newIcons = [...icons, ...planetIcons];
+    this.setState({
+      icons: newIcons,
+      planetIcons: [],
+      iconsClasses: [],
+    });
+  }
+
   render() {
     const { icons, planetIcons } = this.state;
 
     return (
       <div className="game1-wrapper">
-        <h2>Выберите кто населяет планету:</h2>
-        <h3>Перенесите нужные иконки, из списка, на планету</h3>
-        <DragDropContext onDragEnd={this.onDragEnd}>
-          <Droppable droppableId="planet">
-            {(provided) => (
-              <div
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                className="planet"
-              >
-                {Game1.getIcons(planetIcons, 'planet')}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-          <Droppable droppableId="droppable">
-            {(provided) => (
-              <div
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                className="icons"
-              >
-                {Game1.getIcons(icons, 'base')}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
+        <header className="header">
+          <span>Выберите кто населяет планету:</span>
+          <span>Перенесите нужные иконки, из списка, на планету</span>
+        </header>
+        <main className="main">
+          <DragDropContext onDragEnd={this.onDragEnd}>
+            <Droppable droppableId="planet">
+              {(provided) => (
+                <div
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  className="planet"
+                >
+                  {this.getIcons(planetIcons, 'planet')}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+            <Droppable droppableId="droppable" direction="horizontal">
+              {(provided) => (
+                <div
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  className="icons"
+                >
+                  {this.getIcons(icons, 'base')}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </main>
       </div>
     );
   }

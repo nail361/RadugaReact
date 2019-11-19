@@ -5,7 +5,32 @@ h1 {
 
 .games-wrapper{
     display: flex;
-    height: 550px;
+    height: 600px;
+}
+
+.error-modal{
+    display: flex;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+
+    .error-window{
+        height: 100px;
+        width: 150px;
+        background-color: #fff;
+        border: 5px solid grey;
+        text-align: center;
+        padding-top: 20px;
+
+        span{
+            font-size: 18px;
+            font-weight: 600;
+            color: red;
+        }
+    }
 }
 
 .footer{

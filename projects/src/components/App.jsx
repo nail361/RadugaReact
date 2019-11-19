@@ -8,11 +8,37 @@ class App extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = { gameId: 1 };
+    this.state = {
+      gameId: 1,
+      showError: false,
+    };
+
+    this.game = React.createRef();
+
+    this.onAnswerClick = this.onAnswerClick.bind(this);
+    this.showErrorMsg = this.showErrorMsg.bind(this);
   }
 
   onAnswerClick() {
-    const isCorrect = this.checkAnswer();
+    const isCorrect = this.game.current.checkAnswer();
+    if (isCorrect) {
+      //do smth
+    } else {
+      this.showErrorMsg();
+    }
+  }
+
+  showErrorMsg() {
+    this.setState({
+      showError: true,
+    });
+
+    setTimeout(() => {
+      this.setState({
+        showError: false,
+      });
+      this.game.current.replay();
+    }, 2000);
   }
 
   nextGame() {
@@ -22,7 +48,7 @@ class App extends PureComponent {
 
   render() {
     const { name } = this.props;
-    const { gameId } = this.state;
+    const { gameId, showError } = this.state;
     const components = {
       game1: Game1,
     };
@@ -31,9 +57,16 @@ class App extends PureComponent {
 
     return (
       <div>
+        {showError && (
+          <div className="error-modal">
+            <div className="error-window">
+              <span>Ошибка, попробуй ещё раз :)</span>
+            </div>
+          </div>
+        )}
         <h1>Привет {name}!</h1>
         <div className="games-wrapper">
-          <Game nextGame={this.nextGame} />
+          <Game ref={this.game} nextGame={this.nextGame} />
         </div>
         <footer className="footer">
           <button

@@ -1,45 +1,85 @@
 .game1-wrapper{
-  width: 50%;
+  display: flex;
+  flex-direction: column;
   height: 100%;
   text-align: center;
   margin: auto;
 
-  .planet, .icons{
-    .icon{
-      width: 100px;
-      height: 100px;
-      margin: 5px;
-      background-color: white;
-      border: 5px solid grey;
-      border-radius: 50%;
-    }
-  }
-
-  .planet{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    float: left;
-    width: 400px;
-    height: 400px;
-    background-color: rgb(73, 152, 255);
-    background-image: url(../assets/imgs/Game1/earth.png);
-    background-position: center;
-    border: 5px solid rgb(143, 169, 255);
-    border-radius: 50%;
-
-    .icon{
-      width: 50px;
-      height: 50px;
-    }
-  }
-
-  .icons{
-    float: right;
+  .header{
+    font-size: 18px;
+    font-weight: 600;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    height: 80%;
-    width: 250px;
+  }
+
+  .main{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .planet, .icons{
+      .icon{
+        width: 100px;
+        height: 100px;
+        margin: 5px;
+        background-color: white;
+        border: 5px solid grey;
+        border-radius: 50%;
+        background-position: center;
+        background-size: contain;
+
+        &.bird{
+          background-image: url(../assets/imgs/Game1/bird.png);
+        }
+        &.animal{
+          background-image: url(../assets/imgs/Game1/animal.png);
+        }
+        &.fish{
+          background-image: url(../assets/imgs/Game1/fish.png);
+        }
+        &.human{
+          background-image: url(../assets/imgs/Game1/human.png);
+        }
+        &.ufo{
+          background-image: url(../assets/imgs/Game1/ufo.png);
+        }
+        &.dino{
+          background-image: url(../assets/imgs/Game1/dino.png);
+        }
+      }
+    }
+
+    .planet{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 400px;
+      height: 400px;
+      background-color: rgb(73, 152, 255);
+      background-image: url(../assets/imgs/Game1/earth.png);
+      background-position: center;
+      background-size: contain;
+      border: 5px solid rgb(143, 169, 255);
+      border-radius: 50%;
+
+      .icon{
+        flex-basis: 40px;
+        max-height: 40px;
+
+        &.correct{
+          border-color: chartreuse;
+        }
+
+        &.wrong{
+          border-color: crimson;
+        }
+      }
+    }
+
+    .icons{
+      display: flex;
+      flex-direction: row;
+    }
   }
 }
