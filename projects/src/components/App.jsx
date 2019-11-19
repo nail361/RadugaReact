@@ -11,6 +11,7 @@ class App extends PureComponent {
     this.state = {
       gameId: 1,
       showError: false,
+      showComplete: false,
     };
 
     this.game = React.createRef();
@@ -22,10 +23,16 @@ class App extends PureComponent {
   onAnswerClick() {
     const isCorrect = this.game.current.checkAnswer();
     if (isCorrect) {
-      //do smth
+      this.showCompleteMsg();
     } else {
       this.showErrorMsg();
     }
+  }
+
+  showCompleteMsg() {
+    this.setState({
+      showComplete: true,
+    });
   }
 
   showErrorMsg() {
@@ -48,19 +55,29 @@ class App extends PureComponent {
 
   render() {
     const { name } = this.props;
-    const { gameId, showError } = this.state;
+    const { gameId, showError, showComplete } = this.state;
     const components = {
       game1: Game1,
     };
+
+    let resultText = '';
+    let resultClass = '';
+    if (showError) {
+      resultText = 'Ошибка<br />попробуй ещё раз';
+      resultClass = 'error';
+    } else if (showComplete) {
+      resultText = 'Отлично!<br />задание пройдено';
+      resultClass = 'complete';
+    }
 
     const Game = components[`game${gameId}`];
 
     return (
       <div>
-        {showError && (
-          <div className="error-modal">
-            <div className="error-window">
-              <span>Ошибка, попробуй ещё раз :)</span>
+        {(showError || showComplete) && (
+          <div className="result-modal">
+            <div className={['result-window', resultClass].join(' ')}>
+              <span>{resultText}</span>
             </div>
           </div>
         )}
