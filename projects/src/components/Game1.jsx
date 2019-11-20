@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { randomArr } from '../plugins/help';
 
 import '../styles/Games.scss';
 
@@ -48,7 +49,7 @@ class Game1 extends PureComponent {
     super(props);
 
     let icons = ['bird', 'animal', 'human', 'fish', 'dino', 'ufo'];
-    icons = icons.sort(() => Math.random() - 0.5);
+    icons = randomArr(icons);
 
     this.state = {
       icons,
@@ -103,7 +104,7 @@ class Game1 extends PureComponent {
       iconsDiv = icons.map((icon, index) => (
         <div
           key={icon}
-          className={['icon', icon, this.getResultClass(index)].join(' ')}
+          className={`icon ${icon} ${this.getResultClass(index)}`}
         />
       ));
     } else {
@@ -165,7 +166,9 @@ class Game1 extends PureComponent {
 
   replay() {
     const { icons, planetIcons } = this.state;
-    const newIcons = [...icons, ...planetIcons];
+    let newIcons = [...icons, ...planetIcons];
+    newIcons = randomArr(newIcons);
+
     this.setState({
       icons: newIcons,
       planetIcons: [],

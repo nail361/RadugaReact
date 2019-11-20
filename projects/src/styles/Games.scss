@@ -1,4 +1,4 @@
-.game1-wrapper{
+.game1-wrapper, .game2-wrapper{
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -11,9 +11,10 @@
     display: flex;
     flex-direction: column;
   }
+}
 
+.game1-wrapper{
   .main{
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -80,6 +81,78 @@
     .icons{
       display: flex;
       flex-direction: row;
+    }
+  }
+}
+
+.game2-wrapper{
+
+  padding-top: 20px;
+
+  .main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    .checkbox-group{
+      display: flex;
+      width: 500px;
+      height: 58px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12), 0 2px 4px -1px rgba(0,0,0,.2);
+      margin-top: 15px;
+
+      &.correct{
+        .input-background{
+          background-color: chartreuse;
+        }
+      }
+
+      &.wrong{
+        .input-background{
+          background-color: crimson;
+        }
+      }
+
+      input:checked+label .input-background span{
+          background-color: green;
+      }
+
+      label{
+        cursor: pointer;
+        border-right: 1px solid #ccc;
+        padding: 5px;
+        
+        .input-background{
+          display: flex;
+          widows: 48px;
+          height: 48px;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+          background-color: #e6e6e6;
+          padding: 5px;
+          
+          span{
+            display: block;
+            width: 32px;
+            height: 32px;
+            margin: auto;
+            border-radius: 5px;
+            background-color: #848484;
+            cursor: pointer;
+          }
+        }
+      }
+
+      .text-middle{
+        width: 100%;
+        padding-top: 18px;
+        font-size: 18px;
+        font-weight: 600;
+      }
     }
   }
 }

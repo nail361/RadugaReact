@@ -1,15 +1,17 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Game1 from './Game1';
+import Game2 from './Game2';
 
 import '../styles/App.scss';
+import '../styles/reset.css';
 
 class App extends PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      gameId: 1,
+      gameId: 2,
       showError: false,
       showComplete: false,
     };
@@ -33,6 +35,13 @@ class App extends PureComponent {
     this.setState({
       showComplete: true,
     });
+
+    setTimeout(() => {
+      this.setState({
+        showComplete: false,
+      });
+      this.nextGame();
+    }, 2000);
   }
 
   showErrorMsg() {
@@ -58,15 +67,16 @@ class App extends PureComponent {
     const { gameId, showError, showComplete } = this.state;
     const components = {
       game1: Game1,
+      game2: Game2,
     };
 
     let resultText = '';
     let resultClass = '';
     if (showError) {
-      resultText = 'Ошибка<br />попробуй ещё раз';
+      resultText = <span>Ошибка<br />попробуй ещё раз</span>;
       resultClass = 'error';
     } else if (showComplete) {
-      resultText = 'Отлично!<br />задание пройдено';
+      resultText = <span>Отлично!<br />задание пройдено</span>;
       resultClass = 'complete';
     }
 
@@ -77,11 +87,13 @@ class App extends PureComponent {
         {(showError || showComplete) && (
           <div className="result-modal">
             <div className={['result-window', resultClass].join(' ')}>
-              <span>{resultText}</span>
+              {resultText}
             </div>
           </div>
         )}
-        <h1>Привет {name}!</h1>
+        {(gameId === 1) && (
+          <h1>Привет {name}!</h1>
+        )}
         <div className="games-wrapper">
           <Game ref={this.game} nextGame={this.nextGame} />
         </div>
