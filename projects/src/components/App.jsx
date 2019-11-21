@@ -1,13 +1,13 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Suspense } from 'react';
 import PropTypes from 'prop-types';
-import Game1 from './Game1';
-import Game2 from './Game2';
-import Game3 from './Game3';
-
 import '../styles/App.scss';
 import '../styles/reset.css';
 
 import { sendCompleteData } from '../plugins/help';
+
+const Game1 = React.lazy(() => import('./Game1'));
+const Game2 = React.lazy(() => import('./Game2'));
+const Game3 = React.lazy(() => import('./Game3'));
 
 const components = [
   Game1,
@@ -20,7 +20,7 @@ class App extends PureComponent {
     super(props);
 
     this.state = {
-      gameId: 2,
+      gameId: 0,
       showError: false,
       showComplete: false,
       endGame: false,
@@ -70,7 +70,7 @@ class App extends PureComponent {
   nextGame() {
     const { gameId } = this.state;
 
-    if ((gameId + 1) < components.length) {
+    if ((gameId + 1) >= components.length) {
       this.endGame();
     } else {
       this.setState({ gameId: gameId + 1 });
@@ -129,7 +129,9 @@ class App extends PureComponent {
           <h1>Привет {name}!</h1>
         )}
         <div className="games-wrapper">
-          <Game ref={this.game} nextGame={this.nextGame} />
+          <Suspense fallback={<div>ЗАГРУЗКА...</div>}>
+            <Game ref={this.game} nextGame={this.nextGame} />
+          </Suspense>
         </div>
         <footer className="footer">
           <button
