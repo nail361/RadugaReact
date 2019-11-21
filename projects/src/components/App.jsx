@@ -5,13 +5,14 @@ import Game2 from './Game2';
 
 import '../styles/App.scss';
 import '../styles/reset.css';
+import Game3 from './Game3';
 
 class App extends PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      gameId: 2,
+      gameId: 3,
       showError: false,
       showComplete: false,
     };
@@ -68,6 +69,7 @@ class App extends PureComponent {
     const components = {
       game1: Game1,
       game2: Game2,
+      game3: Game3,
     };
 
     let resultText = '';

@@ -121,7 +121,7 @@ class Game1 extends PureComponent {
               {...provided.dragHandleProps}
               ref={provided.innerRef}
               style={getDropStyle(provided.draggableProps.style, snapshot)}
-              className={['icon', icon].join(' ')}
+              className={`icon ${icon}`}
             />
           )}
         </Draggable>
