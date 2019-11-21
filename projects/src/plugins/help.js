@@ -18,11 +18,8 @@ export const sendCompleteData = async (code) => {
       redirect: 'follow',
       referrer: 'no-referrer',
     });
-    await response();
-    if (!response.ok) {
-      throw Error(response.statusText);
-    }
-    return response.json();
+    await response;
+    return 'OK';
   } catch (error) {
     console.log(error);
   }
