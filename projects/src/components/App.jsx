@@ -2,19 +2,28 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Game1 from './Game1';
 import Game2 from './Game2';
+import Game3 from './Game3';
 
 import '../styles/App.scss';
 import '../styles/reset.css';
-import Game3 from './Game3';
+
+import { sendCompleteData } from '../plugins/help';
+
+const components = [
+  Game1,
+  Game2,
+  Game3,
+];
 
 class App extends PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      gameId: 3,
+      gameId: 2,
       showError: false,
       showComplete: false,
+      endGame: false,
     };
 
     this.game = React.createRef();
@@ -60,17 +69,31 @@ class App extends PureComponent {
 
   nextGame() {
     const { gameId } = this.state;
-    this.setState({ gameId: gameId + 1 });
+
+    if ((gameId + 1) < components.length) {
+      this.endGame();
+    } else {
+      this.setState({ gameId: gameId + 1 });
+    }
+  }
+
+  endGame() {
+    this.setState({
+      endGame: true,
+    });
+    sendCompleteData('game-1-1')
+      .then((data) => console.log(JSON.stringify(data)))
+      .catch((error) => console.error(error));
   }
 
   render() {
     const { name } = this.props;
-    const { gameId, showError, showComplete } = this.state;
-    const components = {
-      game1: Game1,
-      game2: Game2,
-      game3: Game3,
-    };
+    const {
+      gameId,
+      showError,
+      showComplete,
+      endGame,
+    } = this.state;
 
     let resultText = '';
     let resultClass = '';
@@ -82,14 +105,23 @@ class App extends PureComponent {
       resultClass = 'complete';
     }
 
-    const Game = components[`game${gameId}`];
+    const Game = components[gameId];
 
     return (
       <div>
         {(showError || showComplete) && (
           <div className="result-modal">
-            <div className={['result-window', resultClass].join(' ')}>
+            <div className={`result-window ${resultClass}`}>
               {resultText}
+            </div>
+          </div>
+        )}
+        {endGame && (
+          <div className="end-game-modal">
+            <div className="end-game-window">
+              Поздравляем!<br />
+              вы прошли все задания.<br />
+              Можно приступать к следующей теме.
             </div>
           </div>
         )}
