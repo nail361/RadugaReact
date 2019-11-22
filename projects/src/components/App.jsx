@@ -15,6 +15,28 @@ const components = [
   Game3,
 ];
 
+const Loader = () => {
+  return (
+    <div className="loader-wrapper">
+      <div className="lds-spinner">
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+      </div>
+      <div className="loader-title">Загрузка...</div>
+    </div>
+  );
+};
+
 class App extends PureComponent {
   constructor(props) {
     super(props);
@@ -129,7 +151,7 @@ class App extends PureComponent {
           <h1>Привет {name}!</h1>
         )}
         <div className="games-wrapper">
-          <Suspense fallback={<div>ЗАГРУЗКА...</div>}>
+          <Suspense fallback={<Loader />}>
             <Game ref={this.game} nextGame={this.nextGame} />
           </Suspense>
         </div>
