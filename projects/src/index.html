@@ -4,14 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="Description" content="Author: Balyasnikov D.S.">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#317EFB" />
     <link rel="shortcut icon" href="">
+    <link rel="manifest" href="./manifest.json">
     <title>Планета Земля!</title>
 </head>
 
 <body>
     <div id="root">
     </div>
+    <script>
+        if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('service-worker.js').then(function(registration) {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }, function(err) {
+            console.log('ServiceWorker registration failed: ', err);
+            }).catch(function(err) {
+            console.log(err)
+            });
+        });
+        } else {
+        console.log('service worker is not supported');
+        }
+    </script>
 </body>
 
 </html>

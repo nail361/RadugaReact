@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const WebpackAssetsManifest = require('webpack-assets-manifest');
 
 module.exports = (env, options) => {
   const isDevBuild = options.mode === 'development';
@@ -23,7 +24,15 @@ module.exports = (env, options) => {
         to: '[name].[ext]',
         force: true,
       },
+      {
+        from: './src/service-worker.js',
+        to: '[name].[ext]',
+        force: true,
+      },
     ]),
+    new WebpackAssetsManifest({
+      output: 'asset-manifest.json',
+    }),
   ];
 
   if (!isDevBuild) customPlugins.push(new CleanWebpackPlugin());
