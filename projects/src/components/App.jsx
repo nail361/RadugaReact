@@ -1,13 +1,16 @@
 import React, { PureComponent, Suspense } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import Modal from './Modal';
 import '../styles/App.scss';
-import '../styles/reset.css';
 
 import { sendCompleteData } from '../plugins/help';
 
 const Game1 = React.lazy(() => import('./Game1'));
 const Game2 = React.lazy(() => import('./Game2'));
 const Game3 = React.lazy(() => import('./Game3'));
+
+const modalRoot = document.getElementById('modal-root');
 
 const components = [
   Game1,
@@ -131,22 +134,26 @@ class App extends PureComponent {
 
     return (
       <div>
-        {(showError || showComplete) && (
-          <div className="result-modal">
-            <div className={`result-window ${resultClass}`}>
-              {resultText}
-            </div>
-          </div>
-        )}
-        {endGame && (
-          <div className="end-game-modal">
-            <div className="end-game-window">
-              Поздравляем!<br />
-              вы прошли все задания.<br />
-              Можно приступать к следующей теме.
-            </div>
-          </div>
-        )}
+        {(showError || showComplete)
+          && ReactDOM.createPortal(
+            <Modal>
+              <div className={`result-window ${resultClass}`}>
+                {resultText}
+              </div>
+            </Modal>,
+            modalRoot,
+          )}
+        {endGame
+          && ReactDOM.createPortal(
+            <Modal>
+              <div className="end-game-window">
+                Поздравляем!<br />
+                вы прошли все задания.<br />
+                Можно приступать к следующей теме.
+              </div>
+            </Modal>,
+            modalRoot,
+          )}
         {(gameId === 1) && (
           <h1>Привет {name}!</h1>
         )}

@@ -104,42 +104,6 @@ h1 {
     }
 }
 
-.result-modal{
-    display: flex;
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-
-    .result-window{
-        height: 100px;
-        width: 250px;
-        background-color: #fff;
-        border-radius: 15px;
-        text-align: center;
-        border: 5px solid;
-
-        &.error{
-            border-color: #ca0000;
-            color: #ca0000;
-        }
-
-        &.complete{
-            border-color: darkgreen;
-            color: darkgreen;
-        }
-
-        span{
-            display: inline-block;
-            margin-top: 20px;
-            font-size: 24px;
-            font-weight: 800;
-        }
-    }
-}
-
 .footer{
     display: flex;
     justify-content: center;
