@@ -1,5 +1,5 @@
 // Set this to true for production
-const doCache = true;
+const doCache = false;
 
 // Name our cache
 const CACHE_NAME = 'pwa-cache-v1';
@@ -43,7 +43,6 @@ this.addEventListener('install', (event) => {
                 assets['main.css'],
               ];
               cache.addAll(urlsToCache);
-              console.log('cached', assets);
             });
         }),
     );
@@ -61,9 +60,7 @@ this.addEventListener('fetch', (event) => {
 
         const fetchRequest = event.request.clone();
         return fetch(fetchRequest).then((response2) => {
-          // if (!response2 || response2.status !== 200 || response2.type !== 'basic') {
-            return response2;
-          // }
+          return response2;
         });
       }).catch(() => {
         return caches.match('assets/imgs/error.png');
