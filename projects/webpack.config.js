@@ -29,6 +29,11 @@ module.exports = (env, options) => {
         to: '[name].[ext]',
         force: true,
       },
+      {
+        from: './src/assets/imgs/error.png',
+        to: './assets/imgs/[name].[ext]',
+        force: true,
+      },
     ]),
     new WebpackAssetsManifest({
       output: 'asset-manifest.json',
@@ -42,7 +47,7 @@ module.exports = (env, options) => {
 
     devServer: {
       host: 'localhost',
-      port: 3000,
+      port: 3030,
       contentBase: './build',
     },
 
