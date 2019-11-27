@@ -1,10 +1,12 @@
-import React, { PureComponent, Suspense } from 'react';
+import React, { Component, Suspense } from 'react';
 import ReactDOM from 'react-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
+import * as actions from '../actions/GameActions';
 import Modal from './Modal';
 import '../styles/App.scss';
 
-import { sendCompleteData } from '../plugins/help';
+import { sendCompleteData } from '../utils/help';
 
 const Game1 = React.lazy(() => import('./Game1'));
 const Game2 = React.lazy(() => import('./Game2'));
@@ -40,12 +42,11 @@ const Loader = () => {
   );
 };
 
-class App extends PureComponent {
+class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      gameId: 0,
       showError: false,
       showComplete: false,
       endGame: false,
@@ -55,6 +56,10 @@ class App extends PureComponent {
 
     this.onAnswerClick = this.onAnswerClick.bind(this);
     this.showErrorMsg = this.showErrorMsg.bind(this);
+  }
+
+  componentDidMount() {
+    // useDispatch(actions.resetGame);
   }
 
   onAnswerClick() {
@@ -93,13 +98,13 @@ class App extends PureComponent {
   }
 
   nextGame() {
-    const { gameId } = this.state;
+    // const gameId = useSelector((state) => state.gameId);
 
-    if ((gameId + 1) >= components.length) {
-      this.endGame();
-    } else {
-      this.setState({ gameId: gameId + 1 });
-    }
+    // if ((gameId + 1) >= components.length) {
+    //   this.endGame();
+    // } else {
+    //   useDispatch(actions.nextGame);
+    // }
   }
 
   endGame() {
@@ -113,8 +118,8 @@ class App extends PureComponent {
 
   render() {
     const { name } = this.props;
+    const gameId = useSelector((state) => state.gameId);
     const {
-      gameId,
       showError,
       showComplete,
       endGame,

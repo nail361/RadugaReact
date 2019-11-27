@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { randomArr } from '../plugins/help';
+import { randomArr } from '../utils/help';
 
 import '../styles/Games.scss';
 

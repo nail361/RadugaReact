@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 
 import '../styles/Games.scss';
-import randomArr from '../plugins/help';
+import { randomArr } from '../utils/help';
 
 const initAnswers = [
   {

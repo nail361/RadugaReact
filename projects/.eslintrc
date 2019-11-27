@@ -26,7 +26,9 @@
       "object-curly-spacing": ["error", "always"],
       "no-extra-parens": "error",
       "max-len": ["error", { "code": 100 }],
-      "no-multi-spaces": "error"
+      "no-multi-spaces": "error",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
     },
     "settings": {
       "react": {
