@@ -52,7 +52,9 @@
     }
 
     .planet{
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      padding: 85px;
       align-items: center;
       justify-content: center;
       width: 400px;
@@ -65,8 +67,6 @@
       border-radius: 50%;
 
       .icon{
-        flex-basis: 40px;
-        max-height: 40px;
 
         &.correct{
           border-color: chartreuse;
