@@ -1,6 +1,7 @@
 {
     "plugins": [
-        "react"
+        "react",
+        "react-hooks"
     ],
     "parser": "babel-eslint",
     "parserOptions": {
@@ -17,22 +18,22 @@
         "mocha":   true
     },
 	"extends": ["airbnb"],
-    "rules": {
-      "semi": [2, "always"],
-	    "linebreak-style": 0,
-	    "react/jsx-one-expression-per-line": 0,
-      "indent": ["error", 2],
-      "no-plusplus": 0,
-      "object-curly-spacing": ["error", "always"],
-      "no-extra-parens": "error",
-      "max-len": ["error", { "code": 100 }],
-      "no-multi-spaces": "error",
-      "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn",
-    },
-    "settings": {
-      "react": {
-        "version": "16.11"
-      }
+  "rules": {
+    "semi": [2, "always"],
+    "linebreak-style": 0,
+    "react/jsx-one-expression-per-line": 0,
+    "indent": ["error", 2],
+    "no-plusplus": 0,
+    "object-curly-spacing": ["error", "always"],
+    "no-extra-parens": "error",
+    "max-len": ["error", { "code": 100 }],
+    "no-multi-spaces": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
+  },
+  "settings": {
+    "react": {
+      "version": "16.11"
     }
+  }
 }
