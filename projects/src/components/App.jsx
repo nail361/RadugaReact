@@ -1,6 +1,6 @@
 import React, { PureComponent, Suspense } from 'react';
 import ReactDOM from 'react-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as actions from '../actions/GameActions';
 import Modal from './Modal';
@@ -40,6 +40,12 @@ const Loader = () => {
       <div className="loader-title">Загрузка...</div>
     </div>
   );
+};
+
+const mapStateToProps = (state) => {
+  return {
+    gameId: state.gameId,
+  };
 };
 
 class App extends PureComponent {
@@ -99,12 +105,13 @@ class App extends PureComponent {
 
   nextGame() {
     // const gameId = useSelector((state) => state.gameId);
+    const { gameId } = this.props;
 
-    // if ((gameId + 1) >= components.length) {
-    //   this.endGame();
-    // } else {
-    //   useDispatch(actions.nextGame);
-    // }
+    if ((gameId + 1) >= components.length) {
+      this.endGame();
+    } else {
+      this.props.nextGame();
+    }
   }
 
   endGame() {
@@ -117,8 +124,8 @@ class App extends PureComponent {
   }
 
   render() {
-    const { name } = this.props;
-    const gameId = useSelector((state) => state.gameId);
+    const { name, gameId } = this.props;
+    // const gameId = 0;//useSelector((state) => state.gameId);
     const {
       showError,
       showComplete,
@@ -181,7 +188,11 @@ class App extends PureComponent {
   }
 }
 
-export default App;
+export default connect(
+  mapStateToProps,
+  actions,
+)(App);
+// export default App;
 
 App.propTypes = {
   name: PropTypes.string,
