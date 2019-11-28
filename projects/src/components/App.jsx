@@ -1,4 +1,4 @@
-import React, { Component, Suspense } from 'react';
+import React, { PureComponent, Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -42,7 +42,7 @@ const Loader = () => {
   );
 };
 
-class App extends Component {
+class App extends PureComponent {
   constructor(props) {
     super(props);
 

@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "peerDependencies": {
-  },
+  "peerDependencies": {},
   "dependencies": {
     "prop-types": "^15.7.2",
     "react": "^16.11.0",
