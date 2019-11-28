@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const WebpackAssetsManifest = require('webpack-assets-manifest');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = (env, options) => {
   const isDevBuild = options.mode === 'development';
@@ -38,6 +39,12 @@ module.exports = (env, options) => {
     new WebpackAssetsManifest({
       output: 'asset-manifest.json',
     }),
+    new BundleAnalyzerPlugin({
+      // analyzerMode: 'server',
+      analyzerMode: 'disabled',
+      generateStatsFile: true,
+      statsOptions: { source: false },
+    }),
   ];
 
   if (!isDevBuild) customPlugins.push(new CleanWebpackPlugin());
@@ -53,9 +60,6 @@ module.exports = (env, options) => {
 
     resolve: {
       extensions: ['.js', '.jsx'],
-      // alias: {
-      //   react: path.resolve('./node_modules/react'),
-      // },
     },
 
     output: {
