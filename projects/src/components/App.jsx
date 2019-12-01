@@ -20,6 +20,11 @@ const components = [
   Game3,
 ];
 
+export const Game = (gameId, gameRef, nextGame) => {
+  const GameComponent = components[gameId];
+  return <GameComponent ref={gameRef} nextGame={nextGame} />;
+};
+
 const Loader = () => {
   return (
     <div className="loader-wrapper">
@@ -142,8 +147,6 @@ class App extends PureComponent {
       resultClass = 'complete';
     }
 
-    const Game = components[gameId];
-
     return (
       <div>
         {(showError || showComplete)
@@ -171,7 +174,7 @@ class App extends PureComponent {
         )}
         <div className="games-wrapper">
           <Suspense fallback={<Loader />}>
-            <Game ref={this.game} nextGame={this.nextGame} />
+            {Game(gameId, this.game, this.nextGame)}
           </Suspense>
         </div>
         <footer className="footer">

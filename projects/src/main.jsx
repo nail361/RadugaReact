@@ -9,12 +9,21 @@ import './styles/reset.css';
 
 const name = 'имя';
 const app = <App name={name} />;
-const store = createStore(
-  gameState,
-  compose(
+
+let options = null;
+
+if (window.__REDUX_DEVTOOLS_EXTENSION__) {
+  options = compose(
     applyMiddleware(thunk),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  )
+    window.__REDUX_DEVTOOLS_EXTENSION__(),
+  );
+} else {
+  options = applyMiddleware(thunk);
+}
+
+export const store = createStore(
+  gameState,
+  options,
 );
 
 ReactDOM.render(
