@@ -28,8 +28,11 @@ const getDropStyle = (style, snapshot) => {
   };
 };
 
-const reorder = (list, startIndex, endIndex) => {
+export const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
+
+  if (startIndex === endIndex) return result;
+
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
 
