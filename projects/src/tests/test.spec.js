@@ -2,10 +2,11 @@ import { expect } from 'chai';
 import { mount, render, shallow, configure} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
+import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
-import { store } from '../main';
 import { reorder } from '../components/Game1';
-import App, { Game } from '../components/App';
+// import { initialState } from '../reducers/gameState';
+import { Game, App } from '../components/App';
 
 configure({ adapter: new Adapter() });
 
@@ -24,9 +25,20 @@ describe('Game1.jsx', () => {
 });
 
 describe('App Component', () => {
-  it('renders the Game wrapper', () => {
-    const wrapper = shallow(<Provider store={store}><App /></Provider>);
+  const initialState = {
+    gameId: 0,
+  };
+  const mockStore = configureStore();
+  let store;
+  let wrapper;
 
+  beforeEach(() => {
+    store = mockStore(initialState);
+    // wrapper = mount(<Provider store={store}><App /></Provider>);
+    wrapper = shallow(<App store={store} />);
+  });
+
+  it('renders the Game wrapper', () => {
     console.log(wrapper.debug());
 
     expect(wrapper.find(Game)).to.have.length(1);

@@ -53,7 +53,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-class App extends PureComponent {
+export class App extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -110,12 +110,12 @@ class App extends PureComponent {
 
   nextGame() {
     // const gameId = useSelector((state) => state.gameId);
-    const { gameId } = this.props;
+    const { gameId, nextGame } = this.props;
 
     if ((gameId + 1) >= components.length) {
       this.endGame();
     } else {
-      this.props.nextGame();
+      nextGame();
     }
   }
 
@@ -130,7 +130,7 @@ class App extends PureComponent {
 
   render() {
     const { name, gameId } = this.props;
-    // const gameId = 0;//useSelector((state) => state.gameId);
+
     const {
       showError,
       showComplete,
@@ -195,12 +195,15 @@ export default connect(
   mapStateToProps,
   actions,
 )(App);
-// export default App;
 
 App.propTypes = {
   name: PropTypes.string,
+  gameId: PropTypes.number,
+  nextGame: PropTypes.func,
 };
 
 App.defaultProps = {
   name: 'дружок',
+  gameId: 0,
+  nextGame: () => {},
 };
