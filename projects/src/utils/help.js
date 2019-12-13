@@ -3,6 +3,11 @@ export const randomArr = (arr) => {
   return randomedArr;
 };
 
+export const getResultClass = (index, iconsClasses) => {
+  if (index < iconsClasses.length) return iconsClasses[index];
+  return '';
+};
+
 export const sendCompleteData = async (code) => {
   const url = `http://188.225.46.145/statistic.php?code=${code}`;
 
@@ -24,5 +29,3 @@ export const sendCompleteData = async (code) => {
     console.log(error);
   }
 };
-
-export default randomArr;

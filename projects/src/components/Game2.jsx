@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 
 import '../styles/Games.scss';
-import { randomArr } from '../utils/help';
+import { randomArr, getResultClass } from '../utils/help';
 
 const initAnswers = [
   {
@@ -17,7 +17,7 @@ const initAnswers = [
     id: 3, checked: false, correct: false, title: 'Создаёт солнечный свет',
   },
   {
-    id: 4, checked: false, correct: false, title: 'Придумат ещё что-то!!',
+    id: 4, checked: false, correct: false, title: 'Притягивает всё к земле',
   },
 ];
 
@@ -31,7 +31,6 @@ class Game2 extends PureComponent {
     };
 
     this.getAnswers = this.getAnswers.bind(this);
-    this.getResultClass = this.getResultClass.bind(this);
   }
 
   onCheckboxChange(event, id) {
@@ -50,10 +49,10 @@ class Game2 extends PureComponent {
   }
 
   getAnswers() {
-    const { answers } = this.state;
+    const { answers, iconsClasses } = this.state;
 
     const answersCheckboxes = answers.map((answer, index) => (
-      <div className={`checkbox-group ${this.getResultClass(index)}`} key={answer.id}>
+      <div className={`checkbox-group ${getResultClass(index, iconsClasses)}`} key={answer.id}>
         <input
           onChange={(e) => this.onCheckboxChange(e, answer.id)}
           id={`checkbox-${answer.id}`}
@@ -74,13 +73,6 @@ class Game2 extends PureComponent {
     ));
 
     return answersCheckboxes;
-  }
-
-  getResultClass(index) {
-    const { iconsClasses } = this.state;
-
-    if (index < iconsClasses.length) return iconsClasses[index];
-    return '';
   }
 
   checkAnswer() {

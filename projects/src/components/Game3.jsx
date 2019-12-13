@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { randomArr } from '../utils/help';
+import { randomArr, getResultClass } from '../utils/help';
 
 import '../styles/Games.scss';
 
@@ -57,7 +57,6 @@ class Game3 extends PureComponent {
     this.onDragEnd = this.onDragEnd.bind(this);
     this.checkAnswer = this.checkAnswer.bind(this);
     this.getLayers = this.getLayers.bind(this);
-    this.getResultClass = this.getResultClass.bind(this);
     this.replay = this.replay.bind(this);
   }
 
@@ -77,7 +76,7 @@ class Game3 extends PureComponent {
   }
 
   getLayers() {
-    const { layers } = this.state;
+    const { layers, layerClasses } = this.state;
 
     const layersDiv = layers.map((layer, index) => (
       <Draggable
@@ -91,7 +90,7 @@ class Game3 extends PureComponent {
             {...provided.dragHandleProps}
             ref={provided.innerRef}
             style={getDropStyle(provided.draggableProps.style, snapshot)}
-            className={`layer ${this.getResultClass(index)}`}
+            className={`layer ${getResultClass(index, layerClasses)}`}
           >
             <span className="index">{`${index + 1}.`}</span>
             <span className="title">{layer.name}</span>
@@ -101,13 +100,6 @@ class Game3 extends PureComponent {
     ));
 
     return layersDiv;
-  }
-
-  getResultClass(index) {
-    const { layerClasses } = this.state;
-
-    if (index < layerClasses.length) return layerClasses[index];
-    return '';
   }
 
   checkAnswer() {

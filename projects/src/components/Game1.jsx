@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { randomArr } from '../utils/help';
+import { randomArr, getResultClass } from '../utils/help';
 
 import '../styles/Games.scss';
 
@@ -63,7 +63,6 @@ class Game1 extends PureComponent {
     this.onDragEnd = this.onDragEnd.bind(this);
     this.checkAnswer = this.checkAnswer.bind(this);
     this.getIcons = this.getIcons.bind(this);
-    this.getResultClass = this.getResultClass.bind(this);
     this.replay = this.replay.bind(this);
   }
 
@@ -100,6 +99,7 @@ class Game1 extends PureComponent {
 
   getIcons(icons, place) {
     const isDragDisabled = place === 'planet';
+    const { iconsClasses } = this.state;
 
     let iconsDiv;
 
@@ -107,7 +107,7 @@ class Game1 extends PureComponent {
       iconsDiv = icons.map((icon, index) => (
         <div
           key={icon}
-          className={`icon ${icon} ${this.getResultClass(index)}`}
+          className={`icon ${icon} ${getResultClass(index, iconsClasses)}`}
         />
       ));
     } else {
@@ -132,13 +132,6 @@ class Game1 extends PureComponent {
     }
 
     return iconsDiv;
-  }
-
-  getResultClass(index) {
-    const { iconsClasses } = this.state;
-
-    if (index < iconsClasses.length) return iconsClasses[index];
-    return '';
   }
 
   checkAnswer() {
