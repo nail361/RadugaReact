@@ -1,4 +1,9 @@
+.header{
+  composes: header from '../../styles/Games.scss';
+}
+
 .Game2{
+  composes: gameWrapper from '../../styles/Games.scss';
 
   padding-top: 20px;
 

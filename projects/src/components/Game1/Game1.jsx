@@ -3,7 +3,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { randomArr, getResultClass } from '../../utils/help';
 
 import classes from './Game1.scss';
-import globalClasses from '../../styles/Games.scss';
+// import globalClasses from '../../styles/Games.scss';
 
 const getDropStyle = (style, snapshot) => {
   if (!snapshot.isDropAnimating) {
@@ -177,8 +177,8 @@ class Game1 extends PureComponent {
     const { icons, planetIcons } = this.state;
 
     return (
-      <div className={`${classes.Game1} ${globalClasses['game-wrapper']}`}>
-        <header className={globalClasses.header}>
+      <div className={classes.Game1}>
+        <header className={classes.header}>
           <span>Выберите кто населяет планету:</span>
           <span>Перенесите нужные иконки, из списка, на планету</span>
         </header>

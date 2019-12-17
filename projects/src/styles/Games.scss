@@ -1,14 +1,14 @@
-.game-wrapper{
+.gameWrapper{
   display: flex;
   flex-direction: column;
   height: 100%;
   text-align: center;
   margin: auto;
+}
 
-  .header{
-    font-size: 18px;
-    font-weight: 600;
-    display: flex;
-    flex-direction: column;
-  }
+.header{
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
 }

@@ -3,7 +3,6 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { randomArr, getResultClass } from '../../utils/help';
 
 import classes from './Game3.scss';
-import globalClasses from '../../styles/Games.scss';
 
 const getDropStyle = (style, snapshot) => {
   if (!snapshot.isDropAnimating) {
@@ -136,8 +135,8 @@ class Game3 extends PureComponent {
 
   render() {
     return (
-      <div className={`${classes.Game3} ${globalClasses['game-wrapper']}`}>
-        <header className={globalClasses.header}>
+      <div className={classes.Game3}>
+        <header className={classes.header}>
           <span>Расположите слои Земли в правильном порядке.</span>
           <span>
             Перенесите слои так, как если бы они располагались на Земле от поверхности к центру.

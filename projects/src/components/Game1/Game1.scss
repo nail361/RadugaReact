@@ -1,4 +1,10 @@
+.header{
+  composes: header from '../../styles/Games.scss';
+}
+
 .Game1{
+  composes: gameWrapper from '../../styles/Games.scss';
+
   .main{
     display: flex;
     flex-direction: column;

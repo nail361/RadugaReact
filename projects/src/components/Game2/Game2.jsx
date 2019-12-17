@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 
 import classes from './Game2.scss';
-import globalClasses from '../../styles/Games.scss';
 import { randomArr, getResultClass } from '../../utils/help';
 
 const initAnswers = [
@@ -117,8 +116,8 @@ class Game2 extends PureComponent {
 
   render() {
     return (
-      <div className={`${classes.Game2} ${globalClasses['game-wrapper']}`}>
-        <header className={globalClasses.header}>
+      <div className={classes.Game2}>
+        <header className={classes.header}>
           <span>Зачем нужна атмосфера Земли?</span>
           <span>Отметьте правильные ответы:</span>
         </header>
