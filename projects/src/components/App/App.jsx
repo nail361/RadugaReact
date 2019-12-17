@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import API from '../../utils/API';
 import * as actions from '../../actions/GameActions';
 import Modal from '../Modal/Modal';
+import Loader from '../Loader/Loader';
 import classes from './App.scss';
 
 import { sendCompleteData } from '../../utils/help';
@@ -24,28 +25,6 @@ const components = [
 export const Game = (gameId, gameRef, nextGame) => {
   const GameComponent = components[gameId];
   return <GameComponent ref={gameRef} nextGame={nextGame} />;
-};
-
-const Loader = () => {
-  return (
-    <div className="loader-wrapper">
-      <div className="lds-spinner">
-        <div />
-        <div />
-        <div />
-        <div />
-        <div />
-        <div />
-        <div />
-        <div />
-        <div />
-        <div />
-        <div />
-        <div />
-      </div>
-      <div className="loader-title">Загрузка...</div>
-    </div>
-  );
 };
 
 const mapStateToProps = (state) => {
@@ -218,11 +197,6 @@ export default connect(
 )(App);
 
 App.propTypes = {
-  gameId: PropTypes.number,
-  nextGame: PropTypes.func,
-};
-
-App.defaultProps = {
-  gameId: 0,
-  nextGame: () => {},
+  gameId: PropTypes.number.isRequired,
+  nextGame: PropTypes.func.isRequired,
 };
