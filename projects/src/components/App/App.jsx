@@ -7,6 +7,7 @@ import * as actions from '../../actions/GameActions';
 import Modal from '../Modal/Modal';
 import Loader from '../Loader/Loader';
 import classes from './App.scss';
+import modalClasses from '../Modal/Modal.scss';
 
 import { sendCompleteData } from '../../utils/help';
 
@@ -141,10 +142,10 @@ class App extends PureComponent {
     let resultClass = '';
     if (showError) {
       resultText = <span>Ошибка<br />попробуй ещё раз</span>;
-      resultClass = 'error';
+      resultClass = modalClasses.error;
     } else if (showComplete) {
       resultText = <span>Отлично!<br />задание пройдено</span>;
-      resultClass = 'complete';
+      resultClass = modalClasses.complete;
     }
 
     return (
@@ -152,7 +153,7 @@ class App extends PureComponent {
         {(showError || showComplete)
           && ReactDOM.createPortal(
             <Modal>
-              <div className={`result-window ${resultClass}`}>
+              <div className={`${modalClasses.resultWindow} ${resultClass}`}>
                 {resultText}
               </div>
             </Modal>,
@@ -161,10 +162,9 @@ class App extends PureComponent {
         {endGame
           && ReactDOM.createPortal(
             <Modal>
-              <div className="end-game-window">
-                Поздравляем!<br />
-                вы прошли все задания.<br />
-                Можно приступать к следующей теме.
+              <div className={modalClasses.resultWindow}>
+                <p style={{ fontSize: '22px', margin: '5px' }}>Поздравляем!</p>
+                <p>Вы прошли все задания,<br />можно приступать к следующей теме.</p>
               </div>
             </Modal>,
             modalRoot,

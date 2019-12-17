@@ -6,7 +6,7 @@ class Modal extends PureComponent {
   render() {
     const { children } = this.props;
     return (
-      <div className="modal">
+      <div className={classes.Modal}>
         {children}
       </div>
     );
