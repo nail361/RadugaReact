@@ -3,7 +3,7 @@ h1 {
     text-align: center;
 }
 
-.games-wrapper{
+.Games{
     display: flex;
     height: 600px;
 
@@ -104,11 +104,11 @@ h1 {
     }
 }
 
-.footer{
+.Footer{
     display: flex;
     justify-content: center;
 
-    .answer-btn{
+    .AnswerBtn{
         font-size: 24px;
         font-weight: 600;
         color:white;

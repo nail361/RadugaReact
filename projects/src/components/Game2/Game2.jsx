@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 
-import '../styles/Games.scss';
-import { randomArr, getResultClass } from '../utils/help';
+import classes from './Game2.scss';
+import globalClasses from '../../styles/Games.scss';
+import { randomArr, getResultClass } from '../../utils/help';
 
 const initAnswers = [
   {
@@ -37,10 +38,11 @@ class Game2 extends PureComponent {
     const { checked } = event.currentTarget;
     let { answers } = this.state;
     answers = answers.map((answer) => {
-      if (answer.id === id) {
-        answer.checked = checked;
+      const newAnswer = { ...answer };
+      if (newAnswer.id === id) {
+        newAnswer.checked = checked;
       }
-      return answer;
+      return newAnswer;
     });
 
     this.setState({
@@ -52,7 +54,7 @@ class Game2 extends PureComponent {
     const { answers, iconsClasses } = this.state;
 
     const answersCheckboxes = answers.map((answer, index) => (
-      <div className={`checkbox-group ${getResultClass(index, iconsClasses)}`} key={answer.id}>
+      <div className={`${classes['checkbox-group']} ${getResultClass(index, iconsClasses)}`} key={answer.id}>
         <input
           onChange={(e) => this.onCheckboxChange(e, answer.id)}
           id={`checkbox-${answer.id}`}
@@ -62,11 +64,11 @@ class Game2 extends PureComponent {
           checked={answer.checked}
         />
         <label htmlFor={`checkbox-${answer.id}`} checked={answer.checked}>
-          <span className="input-background">
+          <span className={classes['input-background']}>
             <span />
           </span>
         </label>
-        <span className="text-middle">
+        <span className={classes['text-middle']}>
           <span>{answer.title}</span>
         </span>
       </div>
@@ -78,19 +80,20 @@ class Game2 extends PureComponent {
   checkAnswer() {
     let correct = true;
     const { answers } = this.state;
-    const classes = [];
+    const iconsClasses = [];
 
     answers.forEach((answer) => {
-      if (answer.checked === answer.correct) {
-        classes.push('correct');
-      } else {
-        correct = false;
-        classes.push('wrong');
-      }
+      if (answer.checked) {
+        if (answer.correct) iconsClasses.push(classes.correct);
+        else {
+          iconsClasses.push(classes.wrong);
+          correct = false;
+        }
+      } else iconsClasses.push('');
     });
 
     this.setState({
-      iconsClasses: classes,
+      iconsClasses,
     });
 
     return correct;
@@ -99,8 +102,9 @@ class Game2 extends PureComponent {
   replay() {
     let { answers } = this.state;
 
-    answers.forEach((answer) => {
-      answer.checked = false;
+    answers = answers.map((answer) => {
+      const newAnswer = { ...answer, checked: false };
+      return newAnswer;
     });
 
     answers = randomArr(answers);
@@ -113,12 +117,12 @@ class Game2 extends PureComponent {
 
   render() {
     return (
-      <div className="game2-wrapper">
-        <header className="header">
+      <div className={`${classes.Game2} ${globalClasses['game-wrapper']}`}>
+        <header className={globalClasses.header}>
           <span>Зачем нужна атмосфера Земли?</span>
           <span>Отметьте правильные ответы:</span>
         </header>
-        <main className="main">
+        <main className={classes.main}>
           {this.getAnswers()}
         </main>
       </div>

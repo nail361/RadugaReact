@@ -88,6 +88,9 @@ module.exports = (env, options) => {
               loader: 'css-loader',
               options: {
                 sourceMap: true,
+                modules: {
+                  localIdentName: '[name]__[local]___[hash:base64:5]',
+                },
               },
             },
             {

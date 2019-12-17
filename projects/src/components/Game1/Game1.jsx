@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { randomArr, getResultClass } from '../utils/help';
+import { randomArr, getResultClass } from '../../utils/help';
 
-import '../styles/Games.scss';
+import classes from './Game1.scss';
+import globalClasses from '../../styles/Games.scss';
 
 const getDropStyle = (style, snapshot) => {
   if (!snapshot.isDropAnimating) {
@@ -107,7 +108,7 @@ class Game1 extends PureComponent {
       iconsDiv = icons.map((icon, index) => (
         <div
           key={icon}
-          className={`icon ${icon} ${getResultClass(index, iconsClasses)}`}
+          className={`${classes.icon} ${classes[icon]} ${getResultClass(index, iconsClasses)}`}
         />
       ));
     } else {
@@ -124,7 +125,7 @@ class Game1 extends PureComponent {
               {...provided.dragHandleProps}
               ref={provided.innerRef}
               style={getDropStyle(provided.draggableProps.style, snapshot)}
-              className={`icon ${icon}`}
+              className={`${classes.icon} ${classes[icon]}`}
             />
           )}
         </Draggable>
@@ -139,20 +140,20 @@ class Game1 extends PureComponent {
     const { planetIcons } = this.state;
 
     let trueCount = trueAnswers.length;
-    const classes = [];
+    const iconsClasses = [];
 
     planetIcons.forEach((icon) => {
       if (trueAnswers.indexOf(icon) >= 0) {
         trueCount--;
-        classes.push('correct');
+        iconsClasses.push(classes.correct);
       } else {
         trueCount++;
-        classes.push('wrong');
+        iconsClasses.push(classes.wrong);
       }
     });
 
     this.setState({
-      iconsClasses: classes,
+      iconsClasses,
     });
 
     if (trueCount > 0) correct = false;
@@ -176,19 +177,19 @@ class Game1 extends PureComponent {
     const { icons, planetIcons } = this.state;
 
     return (
-      <div className="game1-wrapper">
-        <header className="header">
+      <div className={`${classes.Game1} ${globalClasses['game-wrapper']}`}>
+        <header className={globalClasses.header}>
           <span>Выберите кто населяет планету:</span>
           <span>Перенесите нужные иконки, из списка, на планету</span>
         </header>
-        <main className="main">
+        <main className={classes.main}>
           <DragDropContext onDragEnd={this.onDragEnd}>
             <Droppable droppableId="planet">
               {(provided) => (
                 <div
                   {...provided.droppableProps}
                   ref={provided.innerRef}
-                  className="planet"
+                  className={classes.planet}
                 >
                   {this.getIcons(planetIcons, 'planet')}
                   {provided.placeholder}
@@ -200,7 +201,7 @@ class Game1 extends PureComponent {
                 <div
                   {...provided.droppableProps}
                   ref={provided.innerRef}
-                  className="icons"
+                  className={classes.icons}
                 >
                   {this.getIcons(icons, 'base')}
                   {provided.placeholder}

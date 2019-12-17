@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { randomArr, getResultClass } from '../utils/help';
+import { randomArr, getResultClass } from '../../utils/help';
 
-import '../styles/Games.scss';
+import classes from './Game3.scss';
+import globalClasses from '../../styles/Games.scss';
 
 const getDropStyle = (style, snapshot) => {
   if (!snapshot.isDropAnimating) {
@@ -90,10 +91,10 @@ class Game3 extends PureComponent {
             {...provided.dragHandleProps}
             ref={provided.innerRef}
             style={getDropStyle(provided.draggableProps.style, snapshot)}
-            className={`layer ${getResultClass(index, layerClasses)}`}
+            className={`${classes.layer} ${getResultClass(index, layerClasses)}`}
           >
-            <span className="index">{`${index + 1}.`}</span>
-            <span className="title">{layer.name}</span>
+            <span className={classes.index}>{`${index + 1}.`}</span>
+            <span className={classes.title}>{layer.name}</span>
           </div>
         )}
       </Draggable>
@@ -105,19 +106,19 @@ class Game3 extends PureComponent {
   checkAnswer() {
     let correct = true;
     const { layers } = this.state;
-    const classes = [];
+    const layerClasses = [];
 
     layers.forEach((layer, index) => {
       if (layer.order === index) {
-        classes.push('correct');
+        layerClasses.push(classes.correct);
       } else {
-        classes.push('wrong');
+        layerClasses.push(classes.wrong);
         correct = false;
       }
     });
 
     this.setState({
-      layerClasses: classes,
+      layerClasses,
     });
 
     return correct;
@@ -135,22 +136,22 @@ class Game3 extends PureComponent {
 
   render() {
     return (
-      <div className="game3-wrapper">
-        <header className="header">
+      <div className={`${classes.Game3} ${globalClasses['game-wrapper']}`}>
+        <header className={globalClasses.header}>
           <span>Расположите слои Земли в правильном порядке.</span>
           <span>
             Перенесите слои так, как если бы они располагались на Земле от поверхности к центру.
           </span>
         </header>
-        <main className="main">
-          <div className="planet" />
+        <main className={classes.main}>
+          <div className={classes.planet} />
           <DragDropContext onDragEnd={this.onDragEnd}>
             <Droppable droppableId="droppable" direction="vertical">
               {(provided) => (
                 <div
                   {...provided.droppableProps}
                   ref={provided.innerRef}
-                  className="layers"
+                  className={classes.layers}
                 >
                   {this.getLayers()}
                   {provided.placeholder}

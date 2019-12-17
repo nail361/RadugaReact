@@ -4,11 +4,8 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import gameState from './reducers/gameState';
-import App from './components/App';
+import App from './components/App/App';
 import './styles/reset.css';
-
-const name = 'имя';
-const app = <App name={name} />;
 
 let options = null;
 
@@ -28,7 +25,7 @@ export const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    {app}
+    <App />
   </Provider>,
   document.getElementById('root'),
 );

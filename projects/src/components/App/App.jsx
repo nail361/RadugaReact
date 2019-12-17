@@ -2,15 +2,16 @@ import React, { PureComponent, Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import * as actions from '../actions/GameActions';
-import Modal from './Modal';
-import '../styles/App.scss';
+import API from '../../utils/API';
+import * as actions from '../../actions/GameActions';
+import Modal from '../Modal/Modal';
+import classes from './App.scss';
 
-import { sendCompleteData } from '../utils/help';
+import { sendCompleteData } from '../../utils/help';
 
-const Game1 = React.lazy(() => import('./Game1'));
-const Game2 = React.lazy(() => import('./Game2'));
-const Game3 = React.lazy(() => import('./Game3'));
+const Game1 = React.lazy(() => import('../Game1/Game1'));
+const Game2 = React.lazy(() => import('../Game2/Game2'));
+const Game3 = React.lazy(() => import('../Game3/Game3'));
 
 const modalRoot = document.getElementById('modal-root');
 
@@ -53,13 +54,15 @@ const mapStateToProps = (state) => {
   };
 };
 
-export class App extends PureComponent {
+class App extends PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
       showError: false,
       showComplete: false,
+      isLoading: true,
+      name: 'дружок',
       endGame: false,
     };
 
@@ -69,8 +72,25 @@ export class App extends PureComponent {
     this.showErrorMsg = this.showErrorMsg.bind(this);
   }
 
-  componentDidMount() {
-    // useDispatch(actions.resetGame);
+  async componentDidMount() {
+    try {
+      const userData = await API.get('/', {
+        params: {
+          inc: 'name',
+        },
+      });
+
+      const { name } = userData.data.results[0];
+      this.setState({
+        isLoading: false,
+        name,
+      });
+    } catch (e) {
+      console.log(`😱 Axios request failed: ${e}`);
+      this.setState({
+        isLoading: false,
+      });
+    }
   }
 
   onAnswerClick() {
@@ -129,7 +149,8 @@ export class App extends PureComponent {
   }
 
   render() {
-    const { name, gameId } = this.props;
+    const { gameId } = this.props;
+    const { name, isLoading } = this.state;
 
     const {
       showError,
@@ -169,17 +190,17 @@ export class App extends PureComponent {
             </Modal>,
             modalRoot,
           )}
-        {(gameId === 1) && (
+        {((gameId === 0) && !isLoading) && (
           <h1>Привет {name}!</h1>
         )}
-        <div className="games-wrapper">
+        <div className={classes.Games}>
           <Suspense fallback={<Loader />}>
             {Game(gameId, this.game, this.nextGame)}
           </Suspense>
         </div>
-        <footer className="footer">
+        <footer className={classes.Footer}>
           <button
-            className="answer-btn"
+            className={classes.AnswerBtn}
             type="button"
             onClick={this.onAnswerClick}
           >
@@ -197,13 +218,11 @@ export default connect(
 )(App);
 
 App.propTypes = {
-  name: PropTypes.string,
   gameId: PropTypes.number,
   nextGame: PropTypes.func,
 };
 
 App.defaultProps = {
-  name: 'дружок',
   gameId: 0,
   nextGame: () => {},
 };
