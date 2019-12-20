@@ -52,25 +52,23 @@ class App extends PureComponent {
     this.showErrorMsg = this.showErrorMsg.bind(this);
   }
 
-  async componentDidMount() {
-    try {
-      const userData = await API.get('/', {
+  componentDidMount() {
+      API.get('/', {
         params: {
           inc: 'name',
         },
+      }).then( (userData) => {
+        const { name } = userData.data.results[0];
+        this.setState({
+          isLoading: false,
+          name,
+        });
+      }).catch( (eror) => {
+        console.log(`😱 Axios request failed: ${eror}`);
+        this.setState({
+          isLoading: false,
+        });
       });
-
-      const { name } = userData.data.results[0];
-      this.setState({
-        isLoading: false,
-        name,
-      });
-    } catch (e) {
-      console.log(`😱 Axios request failed: ${e}`);
-      this.setState({
-        isLoading: false,
-      });
-    }
   }
 
   onAnswerClick() {
